@@ -1,0 +1,38 @@
+[startup] Loading ML model...
+[startup] Model loaded: vrf_v1
+INFO:     127.0.0.1:56196 - "POST /reports/upload HTTP/1.1" 201 Created
+INFO:     127.0.0.1:59487 - "GET /reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59488 - "GET /reports?min_score=80&status=completed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52407 - "GET /reports/00000000-0000-0000-0000-000000000000 HTTP/1.1" 404 Not Found
+[pipeline] [1/4] Extracting text from upload_561908523629.pdf
+[pipeline] [2/4] Indexing chunks (embed + pgvector)
+[retrieval] Chunking -> 143 chunks
+[retrieval] Embedded 143 vectors (dim=2048)
+[retrieval] Classifier distribution: {'other': 93, 'risk': 7, 'notes': 39, 'fin_stmt': 4}
+[pipeline]       Indexed 143 chunks
+[pipeline] [3/4] Retrieving financial-statement chunks + extracting KPIs (1 Nemotron call)
+[pipeline]       Retrieved 6 chunks (17280 chars)
+[pipeline]       KPIs: {'revenue_growth': 0.6548, 'net_margin': 0.556, 'debt_equity': 0.0538, 'roe': 0.7633, 'current_ratio': 3.9051}
+[pipeline] [4/4] Scoring + SHAP + brief
+[pipeline]       Score=65.97/100 Label=Buy Conf=31.94%
+[pipeline]       OOD: Both layers flag OOD: coverage_score=0.014 < 0.05 and knn_pct=0.986 > 0.95
+INFO:     127.0.0.1:62945 - "POST /reports/upload HTTP/1.1" 201 Created
+INFO:     127.0.0.1:65444 - "GET /reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54571 - "GET /reports?min_score=60&status=completed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53746 - "GET /reports/a0ea8327-10a4-4062-96ff-3b5ccbffce2f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51315 - "GET /reports/00000000-0000-0000-0000-000000000000 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54871 - "POST /reports/upload HTTP/1.1" 201 Created
+[pipeline] [1/4] Extracting text from upload_561908523629.pdf
+[pipeline] [2/4] Indexing chunks (embed + pgvector)
+[retrieval] Chunking -> 143 chunks
+[retrieval] Embedded 143 vectors (dim=2048)
+[retrieval] Classifier distribution: {'other': 93, 'risk': 7, 'notes': 39, 'fin_stmt': 4}
+[pipeline]       Indexed 143 chunks
+[pipeline] [3/4] Retrieving financial-statement chunks + extracting KPIs (1 Nemotron call)
+[pipeline]       Retrieved 6 chunks (17280 chars)
+[pipeline]       KPIs: {'revenue_growth': 0.6547, 'net_margin': 0.556, 'debt_equity': 0.0538, 'roe': 0.7633, 'current_ratio': 3.9051}
+[pipeline] [4/4] Scoring + SHAP + brief
+[pipeline]       Score=65.97/100 Label=Buy Conf=31.94%
+[pipeline]       OOD: Both layers flag OOD: coverage_score=0.014 < 0.05 and knn_pct=0.986 > 0.95
+INFO:     127.0.0.1:49396 - "POST /reports/upload HTTP/1.1" 201 Created
+INFO:     127.0.0.1:54876 - "GET /health HTTP/1.1" 200 OK

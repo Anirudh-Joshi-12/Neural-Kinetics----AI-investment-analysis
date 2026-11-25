@@ -1,0 +1,105 @@
+# ML Training Configuration
+# ==========================
+# Version: v1.5
+# Two-layer training: 6m (all) + 12m (override)
+
+# Random Forest Configuration
+rf:
+  n_estimators: 500
+  max_depth: 6
+  min_samples_leaf: 8
+  class_weight: "balanced"
+  random_state: 42
+  n_jobs: -1
+
+# Training Configuration
+training:
+  # Anchor weighting (replicate each real anchor N times)
+  anchor_weight: 5
+  
+  # Data splits
+  test_size: 0.2
+  cv_folds: 5
+  
+  # Labeling
+  label_method: "quantile"  # fixed, quantile, sector_neutral, risk_adjusted, ensemble
+  quantile_low: 0.30
+  quantile_high: 0.70
+  fixed_buy_threshold: 0.05
+  fixed_avoid_threshold: -0.05
+  
+  # Years to fetch
+  max_years_back: 5
+  years: [2025, 2024, 2023, 2022, 2021]
+
+# Data Configuration
+data:
+  # KPI features (5)
+  kpi_features:
+    - revenue_growth
+    - net_margin
+    - debt_equity
+    - roe
+    - current_ratio
+  
+  # Valuation features (7)
+  valuation_features:
+    - trailing_pe_log
+    - forward_pe_log
+    - price_to_sales_log
+    - peg_clipped
+    - price_to_book_log
+    - market_cap_log
+    - dividend_yield
+  
+  # Momentum features (3)
+  momentum_features:
+    - mom_3m
+    - mom_6m
+    - mom_12m
+  
+  # Volatility features (2)
+  volatility_features:
+    - vol_6m
+    - vol_12m
+  
+  # Beta feature (1)
+  beta_features:
+    - beta_12m
+  
+  # Sector-relative features (2)
+  sector_features:
+    - sector_rel_6m
+    - sector_rel_12m
+
+# Evaluation
+evaluation:
+  cv_folds: 5
+  group_by: "ticker"
+  metrics:
+    - accuracy
+    - f1
+    - precision
+    - recall
+    - roc_auc
+  thresholds:
+    - 0.3
+    - 0.4
+    - 0.5
+    - 0.55
+    - 0.6
+    - 0.65
+    - 0.7
+
+# OOD Detection
+ood:
+  method: "knn"
+  n_neighbors: 10
+  percentile_threshold: 0.95
+
+# Model Paths
+paths:
+  model_6m: "./ml/scorer.joblib"
+  model_12m: "./ml/scorer_12m.joblib"
+  ood_distribution: "./ml/train_kpi_distribution.joblib"
+  calibration: "./ml/calibration.json"
